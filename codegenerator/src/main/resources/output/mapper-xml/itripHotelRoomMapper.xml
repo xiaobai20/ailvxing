@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.mapper.ItripHotelRoomMapper">
+
+    <select id="getById" resultType="ItripHotelRoom">
+        select
+                id as id,         <!--主键-->
+                hotelId as hotelId,         <!--酒店ID-->
+                roomTitle as roomTitle,         <!--房间名称-->
+                roomPrice as roomPrice,         <!--房间价格-->
+                roomBedTypeId as roomBedTypeId,         <!--酒店床型-->
+                isHavingBreakfast as isHavingBreakfast,         <!--是否包含早餐-->
+                payType as payType,         <!--1:在线付 2:到店付 3:不限-->
+                satisfaction as satisfaction,         <!--满意度（冗余字段，在用户评论后更新）-->
+                isBook as isBook,         <!--是否可预订(0:不可以 1:可以)-->
+                isCancel as isCancel,         <!--是否可取消(0:不可 1:可以)-->
+                isTimelyResponse as isTimelyResponse,         <!--是否及时响应(0:不及时 1:及时)-->
+                creationDate as creationDate,         <!---->
+                createdBy as createdBy,         <!---->
+                modifyDate as modifyDate,         <!---->
+                modifiedBy as modifiedBy          <!---->
+        from itrip_hotel_room
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getListByMap" resultType="ItripHotelRoom"
+            parameterType="java.util.Map">
+            select
+                id as id,      <!--主键-->
+                hotelId as hotelId,      <!--酒店ID-->
+                roomTitle as roomTitle,      <!--房间名称-->
+                roomPrice as roomPrice,      <!--房间价格-->
+                roomBedTypeId as roomBedTypeId,      <!--酒店床型-->
+                isHavingBreakfast as isHavingBreakfast,      <!--是否包含早餐-->
+                payType as payType,      <!--1:在线付 2:到店付 3:不限-->
+                satisfaction as satisfaction,      <!--满意度（冗余字段，在用户评论后更新）-->
+                isBook as isBook,      <!--是否可预订(0:不可以 1:可以)-->
+                isCancel as isCancel,      <!--是否可取消(0:不可 1:可以)-->
+                isTimelyResponse as isTimelyResponse,      <!--是否及时响应(0:不及时 1:及时)-->
+                creationDate as creationDate,      <!---->
+                createdBy as createdBy,      <!---->
+                modifyDate as modifyDate,      <!---->
+                modifiedBy as modifiedBy       <!---->
+            from itrip_hotel_room
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null and id!=''">
+                    and id=#{id}
+                </if>
+                <if test="hotelId != null and hotelId!=''">
+                    and hotelId=#{hotelId}
+                </if>
+                <if test="roomTitle != null and roomTitle!=''">
+                    and roomTitle=#{roomTitle}
+                </if>
+                <if test="roomPrice != null and roomPrice!=''">
+                    and roomPrice=#{roomPrice}
+                </if>
+                <if test="roomBedTypeId != null and roomBedTypeId!=''">
+                    and roomBedTypeId=#{roomBedTypeId}
+                </if>
+                <if test="isHavingBreakfast != null and (isHavingBreakfast!='' or isHavingBreakfast==0)">
+                    and isHavingBreakfast=#{isHavingBreakfast}
+                </if>
+                <if test="payType != null and (payType!='' or payType==0)">
+                    and payType=#{payType}
+                </if>
+                <if test="satisfaction != null and satisfaction!=''">
+                    and satisfaction=#{satisfaction}
+                </if>
+                <if test="isBook != null and (isBook!='' or isBook==0)">
+                    and isBook=#{isBook}
+                </if>
+                <if test="isCancel != null and (isCancel!='' or isCancel==0)">
+                    and isCancel=#{isCancel}
+                </if>
+                <if test="isTimelyResponse != null and (isTimelyResponse!='' or isTimelyResponse==0)">
+                    and isTimelyResponse=#{isTimelyResponse}
+                </if>
+                <if test="creationDate != null and creationDate!=''">
+                    and creationDate=#{creationDate}
+                </if>
+                <if test="createdBy != null and createdBy!=''">
+                    and createdBy=#{createdBy}
+                </if>
+                <if test="modifyDate != null and modifyDate!=''">
+                    and modifyDate=#{modifyDate}
+                </if>
+                <if test="modifiedBy != null and modifiedBy!=''">
+                    and modifiedBy=#{modifiedBy}
+                </if>
+        </trim>
+        order by creationDate desc
+        <if test="beginPos != null and beginPos!='' and pageSize != null  and pageSize !='' ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCountByMap" resultType="Integer" parameterType="java.util.Map">
+        select count(1) from itrip_hotel_room
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null and id!=''">
+                        and id=#{id}
+                    </if>
+                    <if test="hotelId != null and hotelId!=''">
+                        and hotelId=#{hotelId}
+                    </if>
+                    <if test="roomTitle != null and roomTitle!=''">
+                        and roomTitle=#{roomTitle}
+                    </if>
+                    <if test="roomPrice != null and roomPrice!=''">
+                        and roomPrice=#{roomPrice}
+                    </if>
+                    <if test="roomBedTypeId != null and roomBedTypeId!=''">
+                        and roomBedTypeId=#{roomBedTypeId}
+                    </if>
+                    <if test="isHavingBreakfast != null and (isHavingBreakfast!='' or isHavingBreakfast==0)">
+                        and isHavingBreakfast=#{isHavingBreakfast}
+                    </if>
+                    <if test="payType != null and (payType!='' or payType==0)">
+                        and payType=#{payType}
+                    </if>
+                    <if test="satisfaction != null and satisfaction!=''">
+                        and satisfaction=#{satisfaction}
+                    </if>
+                    <if test="isBook != null and (isBook!='' or isBook==0)">
+                        and isBook=#{isBook}
+                    </if>
+                    <if test="isCancel != null and (isCancel!='' or isCancel==0)">
+                        and isCancel=#{isCancel}
+                    </if>
+                    <if test="isTimelyResponse != null and (isTimelyResponse!='' or isTimelyResponse==0)">
+                        and isTimelyResponse=#{isTimelyResponse}
+                    </if>
+                    <if test="creationDate != null and creationDate!=''">
+                        and creationDate=#{creationDate}
+                    </if>
+                    <if test="createdBy != null and createdBy!=''">
+                        and createdBy=#{createdBy}
+                    </if>
+                    <if test="modifyDate != null and modifyDate!=''">
+                        and modifyDate=#{modifyDate}
+                    </if>
+                    <if test="modifiedBy != null and modifiedBy!=''">
+                        and modifiedBy=#{modifiedBy}
+                    </if>
+        </trim>
+    </select>
+
+    <insert id="save" parameterType="ItripHotelRoom">
+        insert into itrip_hotel_room(
+            hotelId ,      <!--酒店ID-->
+            roomTitle ,      <!--房间名称-->
+            roomPrice ,      <!--房间价格-->
+            roomBedTypeId ,      <!--酒店床型-->
+            isHavingBreakfast ,      <!--是否包含早餐-->
+            payType ,      <!--1:在线付 2:到店付 3:不限-->
+            satisfaction ,      <!--满意度（冗余字段，在用户评论后更新）-->
+            isBook ,      <!--是否可预订(0:不可以 1:可以)-->
+            isCancel ,      <!--是否可取消(0:不可 1:可以)-->
+            isTimelyResponse ,      <!--是否及时响应(0:不及时 1:及时)-->
+            creationDate ,      <!---->
+            createdBy ,      <!---->
+            modifyDate ,      <!---->
+            modifiedBy       <!---->
+        )
+        values(
+                    #{hotelId} ,      <!--酒店ID-->
+                    #{roomTitle} ,      <!--房间名称-->
+                    #{roomPrice} ,      <!--房间价格-->
+                    #{roomBedTypeId} ,      <!--酒店床型-->
+                    #{isHavingBreakfast} ,      <!--是否包含早餐-->
+                    #{payType} ,      <!--1:在线付 2:到店付 3:不限-->
+                    #{satisfaction} ,      <!--满意度（冗余字段，在用户评论后更新）-->
+                    #{isBook} ,      <!--是否可预订(0:不可以 1:可以)-->
+                    #{isCancel} ,      <!--是否可取消(0:不可 1:可以)-->
+                    #{isTimelyResponse} ,      <!--是否及时响应(0:不及时 1:及时)-->
+                    #{creationDate} ,      <!---->
+                    #{createdBy} ,      <!---->
+                    #{modifyDate} ,      <!---->
+                    #{modifiedBy}       <!---->
+        )
+    </insert>
+
+    <update id="modify" parameterType="ItripHotelRoom">
+        update itrip_hotel_room
+        <trim prefix="set" suffixOverrides="," suffix="where id= #{id}">
+                <if test="id != null and id!=''">
+                     id=#{id},
+                </if>
+                <if test="hotelId != null and hotelId!=''">
+                     hotelId=#{hotelId},
+                </if>
+                <if test="roomTitle != null and roomTitle!=''">
+                     roomTitle=#{roomTitle},
+                </if>
+                <if test="roomPrice != null and roomPrice!=''">
+                     roomPrice=#{roomPrice},
+                </if>
+                <if test="roomBedTypeId != null and roomBedTypeId!=''">
+                     roomBedTypeId=#{roomBedTypeId},
+                </if>
+                <if test="isHavingBreakfast != null and (isHavingBreakfast!='' or isHavingBreakfast==0)">
+                     isHavingBreakfast=#{isHavingBreakfast},
+                </if>
+                <if test="payType != null and (payType!='' or payType==0)">
+                     payType=#{payType},
+                </if>
+                <if test="satisfaction != null and satisfaction!=''">
+                     satisfaction=#{satisfaction},
+                </if>
+                <if test="isBook != null and (isBook!='' or isBook==0)">
+                     isBook=#{isBook},
+                </if>
+                <if test="isCancel != null and (isCancel!='' or isCancel==0)">
+                     isCancel=#{isCancel},
+                </if>
+                <if test="isTimelyResponse != null and (isTimelyResponse!='' or isTimelyResponse==0)">
+                     isTimelyResponse=#{isTimelyResponse},
+                </if>
+                <if test="creationDate != null and creationDate!=''">
+                     creationDate=#{creationDate},
+                </if>
+                <if test="createdBy != null and createdBy!=''">
+                     createdBy=#{createdBy},
+                </if>
+                <if test="modifyDate != null and modifyDate!=''">
+                     modifyDate=#{modifyDate},
+                </if>
+                <if test="modifiedBy != null and modifiedBy!=''">
+                     modifiedBy=#{modifiedBy},
+                </if>
+        </trim>
+    </update>
+
+    <delete id="removeById" parameterType="Long">
+        delete from itrip_hotel_room where id = #{id}
+    </delete>
+</mapper>

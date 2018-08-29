@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.mapper.ItripImageMapper">
+
+    <select id="getById" resultType="ItripImage">
+        select
+                id as id,         <!--主键-->
+                type as type,         <!--图片类型(0:酒店图片1:房间图片2:评论图片)-->
+                targetId as targetId,         <!--关联id-->
+                position as position,         <!--图片s上传顺序位置-->
+                imgUrl as imgUrl,         <!--图片地址-->
+                creationDate as creationDate,         <!---->
+                createdBy as createdBy,         <!---->
+                modifyDate as modifyDate,         <!---->
+                modifiedBy as modifiedBy          <!---->
+        from itrip_image
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getListByMap" resultType="ItripImage"
+            parameterType="java.util.Map">
+            select
+                id as id,      <!--主键-->
+                type as type,      <!--图片类型(0:酒店图片1:房间图片2:评论图片)-->
+                targetId as targetId,      <!--关联id-->
+                position as position,      <!--图片s上传顺序位置-->
+                imgUrl as imgUrl,      <!--图片地址-->
+                creationDate as creationDate,      <!---->
+                createdBy as createdBy,      <!---->
+                modifyDate as modifyDate,      <!---->
+                modifiedBy as modifiedBy       <!---->
+            from itrip_image
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null and id!=''">
+                    and id=#{id}
+                </if>
+                <if test="type != null and type!=''">
+                    and type=#{type}
+                </if>
+                <if test="targetId != null and targetId!=''">
+                    and targetId=#{targetId}
+                </if>
+                <if test="position != null and (position!='' or position==0)">
+                    and position=#{position}
+                </if>
+                <if test="imgUrl != null and imgUrl!=''">
+                    and imgUrl=#{imgUrl}
+                </if>
+                <if test="creationDate != null and creationDate!=''">
+                    and creationDate=#{creationDate}
+                </if>
+                <if test="createdBy != null and createdBy!=''">
+                    and createdBy=#{createdBy}
+                </if>
+                <if test="modifyDate != null and modifyDate!=''">
+                    and modifyDate=#{modifyDate}
+                </if>
+                <if test="modifiedBy != null and modifiedBy!=''">
+                    and modifiedBy=#{modifiedBy}
+                </if>
+        </trim>
+        order by creationDate desc
+        <if test="beginPos != null and beginPos!='' and pageSize != null  and pageSize !='' ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCountByMap" resultType="Integer" parameterType="java.util.Map">
+        select count(1) from itrip_image
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null and id!=''">
+                        and id=#{id}
+                    </if>
+                    <if test="type != null and type!=''">
+                        and type=#{type}
+                    </if>
+                    <if test="targetId != null and targetId!=''">
+                        and targetId=#{targetId}
+                    </if>
+                    <if test="position != null and (position!='' or position==0)">
+                        and position=#{position}
+                    </if>
+                    <if test="imgUrl != null and imgUrl!=''">
+                        and imgUrl=#{imgUrl}
+                    </if>
+                    <if test="creationDate != null and creationDate!=''">
+                        and creationDate=#{creationDate}
+                    </if>
+                    <if test="createdBy != null and createdBy!=''">
+                        and createdBy=#{createdBy}
+                    </if>
+                    <if test="modifyDate != null and modifyDate!=''">
+                        and modifyDate=#{modifyDate}
+                    </if>
+                    <if test="modifiedBy != null and modifiedBy!=''">
+                        and modifiedBy=#{modifiedBy}
+                    </if>
+        </trim>
+    </select>
+
+    <insert id="save" parameterType="ItripImage">
+        insert into itrip_image(
+            type ,      <!--图片类型(0:酒店图片1:房间图片2:评论图片)-->
+            targetId ,      <!--关联id-->
+            position ,      <!--图片s上传顺序位置-->
+            imgUrl ,      <!--图片地址-->
+            creationDate ,      <!---->
+            createdBy ,      <!---->
+            modifyDate ,      <!---->
+            modifiedBy       <!---->
+        )
+        values(
+                    #{type} ,      <!--图片类型(0:酒店图片1:房间图片2:评论图片)-->
+                    #{targetId} ,      <!--关联id-->
+                    #{position} ,      <!--图片s上传顺序位置-->
+                    #{imgUrl} ,      <!--图片地址-->
+                    #{creationDate} ,      <!---->
+                    #{createdBy} ,      <!---->
+                    #{modifyDate} ,      <!---->
+                    #{modifiedBy}       <!---->
+        )
+    </insert>
+
+    <update id="modify" parameterType="ItripImage">
+        update itrip_image
+        <trim prefix="set" suffixOverrides="," suffix="where id= #{id}">
+                <if test="id != null and id!=''">
+                     id=#{id},
+                </if>
+                <if test="type != null and type!=''">
+                     type=#{type},
+                </if>
+                <if test="targetId != null and targetId!=''">
+                     targetId=#{targetId},
+                </if>
+                <if test="position != null and (position!='' or position==0)">
+                     position=#{position},
+                </if>
+                <if test="imgUrl != null and imgUrl!=''">
+                     imgUrl=#{imgUrl},
+                </if>
+                <if test="creationDate != null and creationDate!=''">
+                     creationDate=#{creationDate},
+                </if>
+                <if test="createdBy != null and createdBy!=''">
+                     createdBy=#{createdBy},
+                </if>
+                <if test="modifyDate != null and modifyDate!=''">
+                     modifyDate=#{modifyDate},
+                </if>
+                <if test="modifiedBy != null and modifiedBy!=''">
+                     modifiedBy=#{modifiedBy},
+                </if>
+        </trim>
+    </update>
+
+    <delete id="removeById" parameterType="Long">
+        delete from itrip_image where id = #{id}
+    </delete>
+</mapper>

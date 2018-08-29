@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.mapper.ItripProductStoreMapper">
+
+    <select id="getById" resultType="ItripProductStore">
+        select
+                id as id,         <!---->
+                productType as productType,         <!--商品类型(0:旅游产品 1:酒店产品 2:机票产品)-->
+                productId as productId,         <!--商品id-->
+                store as store,         <!--商品库存-->
+                creationDate as creationDate,         <!---->
+                createdBy as createdBy,         <!---->
+                modifyDate as modifyDate,         <!---->
+                modifiedBy as modifiedBy          <!---->
+        from itrip_product_store
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getListByMap" resultType="ItripProductStore"
+            parameterType="java.util.Map">
+            select
+                id as id,      <!---->
+                productType as productType,      <!--商品类型(0:旅游产品 1:酒店产品 2:机票产品)-->
+                productId as productId,      <!--商品id-->
+                store as store,      <!--商品库存-->
+                creationDate as creationDate,      <!---->
+                createdBy as createdBy,      <!---->
+                modifyDate as modifyDate,      <!---->
+                modifiedBy as modifiedBy       <!---->
+            from itrip_product_store
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null and id!=''">
+                    and id=#{id}
+                </if>
+                <if test="productType != null and (productType!='' or productType==0)">
+                    and productType=#{productType}
+                </if>
+                <if test="productId != null and productId!=''">
+                    and productId=#{productId}
+                </if>
+                <if test="store != null and (store!='' or store==0)">
+                    and store=#{store}
+                </if>
+                <if test="creationDate != null and creationDate!=''">
+                    and creationDate=#{creationDate}
+                </if>
+                <if test="createdBy != null and createdBy!=''">
+                    and createdBy=#{createdBy}
+                </if>
+                <if test="modifyDate != null and modifyDate!=''">
+                    and modifyDate=#{modifyDate}
+                </if>
+                <if test="modifiedBy != null and modifiedBy!=''">
+                    and modifiedBy=#{modifiedBy}
+                </if>
+        </trim>
+        order by creationDate desc
+        <if test="beginPos != null and beginPos!='' and pageSize != null  and pageSize !='' ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCountByMap" resultType="Integer" parameterType="java.util.Map">
+        select count(1) from itrip_product_store
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null and id!=''">
+                        and id=#{id}
+                    </if>
+                    <if test="productType != null and (productType!='' or productType==0)">
+                        and productType=#{productType}
+                    </if>
+                    <if test="productId != null and productId!=''">
+                        and productId=#{productId}
+                    </if>
+                    <if test="store != null and (store!='' or store==0)">
+                        and store=#{store}
+                    </if>
+                    <if test="creationDate != null and creationDate!=''">
+                        and creationDate=#{creationDate}
+                    </if>
+                    <if test="createdBy != null and createdBy!=''">
+                        and createdBy=#{createdBy}
+                    </if>
+                    <if test="modifyDate != null and modifyDate!=''">
+                        and modifyDate=#{modifyDate}
+                    </if>
+                    <if test="modifiedBy != null and modifiedBy!=''">
+                        and modifiedBy=#{modifiedBy}
+                    </if>
+        </trim>
+    </select>
+
+    <insert id="save" parameterType="ItripProductStore">
+        insert into itrip_product_store(
+            productType ,      <!--商品类型(0:旅游产品 1:酒店产品 2:机票产品)-->
+            productId ,      <!--商品id-->
+            store ,      <!--商品库存-->
+            creationDate ,      <!---->
+            createdBy ,      <!---->
+            modifyDate ,      <!---->
+            modifiedBy       <!---->
+        )
+        values(
+                    #{productType} ,      <!--商品类型(0:旅游产品 1:酒店产品 2:机票产品)-->
+                    #{productId} ,      <!--商品id-->
+                    #{store} ,      <!--商品库存-->
+                    #{creationDate} ,      <!---->
+                    #{createdBy} ,      <!---->
+                    #{modifyDate} ,      <!---->
+                    #{modifiedBy}       <!---->
+        )
+    </insert>
+
+    <update id="modify" parameterType="ItripProductStore">
+        update itrip_product_store
+        <trim prefix="set" suffixOverrides="," suffix="where id= #{id}">
+                <if test="id != null and id!=''">
+                     id=#{id},
+                </if>
+                <if test="productType != null and (productType!='' or productType==0)">
+                     productType=#{productType},
+                </if>
+                <if test="productId != null and productId!=''">
+                     productId=#{productId},
+                </if>
+                <if test="store != null and (store!='' or store==0)">
+                     store=#{store},
+                </if>
+                <if test="creationDate != null and creationDate!=''">
+                     creationDate=#{creationDate},
+                </if>
+                <if test="createdBy != null and createdBy!=''">
+                     createdBy=#{createdBy},
+                </if>
+                <if test="modifyDate != null and modifyDate!=''">
+                     modifyDate=#{modifyDate},
+                </if>
+                <if test="modifiedBy != null and modifiedBy!=''">
+                     modifiedBy=#{modifiedBy},
+                </if>
+        </trim>
+    </update>
+
+    <delete id="removeById" parameterType="Long">
+        delete from itrip_product_store where id = #{id}
+    </delete>
+</mapper>
